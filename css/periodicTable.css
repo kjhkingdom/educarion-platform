@@ -1,0 +1,195 @@
+/* ==========================================================================
+   원소 주기율표 탐구관 전용 스타일 (periodicTable.css)
+   고1 통합과학 교육과정 맞춤 디자인
+   ========================================================================== */
+
+/* 주기율표 그리드 시스템 */
+.periodic-grid {
+  display: grid;
+  grid-template-columns: repeat(18, minmax(64px, 1fr));
+  grid-gap: 6px;
+  width: 100%;
+  min-width: 1100px;
+}
+
+/* 원소 카드 기본 스타일 */
+.element-card {
+  position: relative;
+  aspect-ratio: 1 / 1.15;
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.element-card:hover {
+  transform: translateY(-4px) scale(1.05);
+  z-index: 20;
+  box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.5), 0 0 16px rgba(99, 102, 241, 0.4);
+  border-color: rgba(165, 180, 252, 0.8);
+}
+
+.element-card.is-dimmed {
+  opacity: 0.18;
+  filter: grayscale(80%);
+  pointer-events: none;
+}
+
+.element-card.is-core-highlight {
+  box-shadow: 0 0 0 2px #6366f1, 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+/* 원소 카드 내부 텍스트 */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.card-number {
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.card-valence {
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  font-weight: 600;
+}
+
+.card-center {
+  text-align: center;
+}
+
+.card-symbol {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.card-name-ko {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-bottom {
+  text-align: center;
+  font-size: 8.5px;
+  color: #94a3b8;
+  line-height: 1;
+}
+
+/* 원소 계열별 색상 테마 (Border & Glow) */
+.cat-alkali-metal {
+  border-left: 3px solid #f87171;
+  background: linear-gradient(135deg, rgba(248, 113, 113, 0.12) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-alkali-metal .card-symbol { color: #fca5a5; }
+
+.cat-alkaline-earth {
+  border-left: 3px solid #fb923c;
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.12) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-alkaline-earth .card-symbol { color: #fdba74; }
+
+.cat-transition {
+  border-left: 3px solid #fbbf24;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-transition .card-symbol { color: #fde047; }
+
+.cat-post-transition {
+  border-left: 3px solid #34d399;
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.1) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-post-transition .card-symbol { color: #6ee7b7; }
+
+.cat-metalloid {
+  border-left: 3px solid #2dd4bf;
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.1) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-metalloid .card-symbol { color: #5eead4; }
+
+.cat-nonmetal {
+  border-left: 3px solid #60a5fa;
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.12) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-nonmetal .card-symbol { color: #93c5fd; }
+
+.cat-halogen {
+  border-left: 3px solid #a78bfa;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.12) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-halogen .card-symbol { color: #c4b5fd; }
+
+.cat-noble-gas {
+  border-left: 3px solid #f472b6;
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.12) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-noble-gas .card-symbol { color: #f9a8d4; }
+
+.cat-lanthanide {
+  border-left: 3px solid #e879f9;
+  background: linear-gradient(135deg, rgba(232, 121, 249, 0.1) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-lanthanide .card-symbol { color: #f0abfc; }
+
+.cat-actinide {
+  border-left: 3px solid #cbd5e1;
+  background: linear-gradient(135deg, rgba(203, 213, 225, 0.1) 0%, rgba(30, 41, 59, 0.8) 100%);
+}
+.cat-actinide .card-symbol { color: #e2e8f0; }
+
+/* 족 및 주기 번호 표시자 */
+.grid-header-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  height: 24px;
+}
+
+.grid-period-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  width: 28px;
+}
+
+/* 보어 원자 모형 애니메이션 */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.bohr-electron {
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9));
+}
+
+.bohr-shell {
+  stroke-dasharray: 4 3;
+  animation: spin-slow 40s linear infinite;
+  transform-origin: center;
+}

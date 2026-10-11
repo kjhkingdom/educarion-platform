@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>원소 주기율표 탐구관 - Science Lab Hub</title>
+  <meta name="description" content="고등학교 1학년 통합과학 인터랙티브 원소 주기율표. 보어 원자 모형, 전자 배치, 원자가 전자를 직접 조작하며 탐구하세요.">
+
+  <!-- Pretendard 웹폰트 CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- 주기율표 전용 스타일시트 -->
+  <link rel="stylesheet" href="css/periodicTable.css">
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
+
+  <!-- =========================================================================
+       모든 개별 수업 페이지 공통 상단 내비게이션 바
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- [플랫폼 로고]: 클릭 시 언제든 메인 로비(index.html)로 복귀 -->
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="flex items-center gap-2.5 group" title="메인 로비(index.html)로 복귀">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center text-white shadow-md shadow-indigo-600/30 group-hover:scale-105 transition-transform">
+              <span class="text-lg">🔬</span>
+            </div>
+            <div>
+              <span class="font-bold text-base tracking-tight text-white group-hover:text-indigo-300 transition-colors">Science Lab Hub</span>
+            </div>
+          </a>
+
+          <!-- 현재 수업 표시 뱃지 -->
+          <div class="hidden sm:flex items-center gap-2 pl-3 border-l border-slate-800">
+            <span class="text-xs font-mono font-bold text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/40">수업 01</span>
+            <span class="text-xs font-medium text-slate-300">원소 주기율표 탐구관</span>
+          </div>
+        </div>
+
+        <!-- [← 전체 수업 목록] 및 [다음 수업 →] 빠른 이동 버튼 -->
+        <nav class="flex items-center gap-2 sm:gap-3" aria-label="수업 이동 내비게이션">
+          <!-- 전체 수업 목록 버튼 -->
+          <a href="index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-all shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span class="hidden xs:inline">전체 수업 목록</span>
+            <span class="xs:hidden">목록</span>
+          </a>
+
+          <!-- 다음 수업 빠른 이동 버튼 -->
+          <a href="acid-base.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition-all">
+            <span>다음 수업 (산염기)</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </a>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- 수업 인트로 배너 -->
+  <section class="bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/60 py-6 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-950 text-indigo-300 border border-indigo-700/60">고1 통합과학</span>
+          <span class="text-xs text-slate-400">물질의 규칙성과 화학 결합</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
+          <span>⚛️ 원소 주기율표 인터랙티브 탐구관</span>
+        </h1>
+        <p class="text-sm text-slate-300 mt-1 max-w-2xl">
+          원소 카드를 클릭하면 <strong>보어 원자 모형</strong>, <strong>전자 껍질(K, L, M, N)</strong>, <strong>원자가 전자 수</strong>와 고1 핵심 개념을 즉시 시각화합니다.
+        </p>
+      </div>
+
+      <!-- 고1 필수 1~20번 원소 집중 스위치 버튼 -->
+      <div class="shrink-0">
+        <button id="btnToggleCore" type="button" class="w-full sm:w-auto px-4 py-2.5 rounded-xl font-bold text-sm bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 border border-slate-700 transition-all flex items-center justify-center gap-2 shadow-sm">
+          🌟 고1 필수 1~20번만 보기
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 탐구 컨트롤 바 (필터 & 실시간 검색) -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 w-full">
+    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+      
+      <!-- 계열별 빠른 필터 버튼 그룹 -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 lg:pb-0 scrollbar-none" role="tablist">
+        <button type="button" data-filter="all" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-indigo-600 text-white border border-indigo-500">
+          전체 보기
+        </button>
+        <button type="button" data-filter="alkali-metal" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white">
+          1족 알칼리 금속
+        </button>
+        <button type="button" data-filter="halogen" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white">
+          17족 할로젠
+        </button>
+        <button type="button" data-filter="noble-gas" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white">
+          18족 비활성 기체
+        </button>
+        <button type="button" data-filter="metals" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white">
+          금속 원소
+        </button>
+        <button type="button" data-filter="nonmetals" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white">
+          비금속 원소
+        </button>
+      </div>
+
+      <!-- 실시간 원소 검색창 -->
+      <div class="relative min-w-[240px]">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <input 
+          id="searchInput" 
+          type="text" 
+          placeholder="원소명, 기호, 번호 검색 (예: 나트륨, Na, 11)"
+          class="w-full pl-9 pr-3 py-1.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+        >
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 메인 주기율표 영역 (가로 스크롤 가능 컨테이너) -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full overflow-hidden">
+    
+    <!-- 주기율표 설명 및 조작 팁 안내 -->
+    <div class="flex items-center justify-between text-xs text-slate-400 mb-3 px-1">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span>원소 카드를 클릭하면 <strong>보어 모형 모달</strong>이 열립니다.</span>
+      </div>
+      <div class="hidden sm:block text-slate-500">
+        💡 키보드 [←] / [→] 키로 이전/다음 원소 연속 탐구 가능
+      </div>
+    </div>
+
+    <!-- 가로 스크롤 래퍼 -->
+    <div class="overflow-x-auto pb-6 pt-1 rounded-2xl border border-slate-800/80 bg-slate-900/40 p-4 shadow-inner">
+      
+      <!-- 1~18족 번호 헤더 레이블 -->
+      <div class="grid grid-cols-[repeat(18,minmax(64px,1fr))] gap-[6px] min-w-[1100px] mb-1">
+        <div class="grid-header-label">1족</div>
+        <div class="grid-header-label">2족</div>
+        <div class="grid-header-label">3족</div>
+        <div class="grid-header-label">4족</div>
+        <div class="grid-header-label">5족</div>
+        <div class="grid-header-label">6족</div>
+        <div class="grid-header-label">7족</div>
+        <div class="grid-header-label">8족</div>
+        <div class="grid-header-label">9족</div>
+        <div class="grid-header-label">10족</div>
+        <div class="grid-header-label">11족</div>
+        <div class="grid-header-label">12족</div>
+        <div class="grid-header-label">13족</div>
+        <div class="grid-header-label">14족</div>
+        <div class="grid-header-label">15족</div>
+        <div class="grid-header-label">16족</div>
+        <div class="grid-header-label">17족</div>
+        <div class="grid-header-label">18족</div>
+      </div>
+
+      <!-- 주기율표 메인 18열 그리드 -->
+      <div id="periodicGridContainer" class="periodic-grid">
+        <!-- periodicTable.js에서 카드 동적 생성 -->
+      </div>
+
+      <!-- 란타넘족 / 악티늄족 서브 그리드 (하단 분리 배치) -->
+      <div class="mt-6 pt-4 border-t border-slate-800/60 min-w-[1100px]">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-xs font-bold text-purple-300 w-24">란타넘족 (57~71)</span>
+          <div id="lanthanideRow" class="grid grid-cols-15 gap-[6px] flex-1"></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-bold text-slate-400 w-24">악티늄족 (89~103)</span>
+          <div id="actinideRow" class="grid grid-cols-15 gap-[6px] flex-1"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 계열 범례 (Legend) -->
+    <div class="mt-6 p-4 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs">
+      <span class="font-bold text-slate-400">계열 색상 안내:</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-400"></span>알칼리 금속</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-orange-400"></span>알칼리 토금속</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-yellow-400"></span>전이 금속</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-400"></span>전이후 금속</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-teal-400"></span>준금속</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-400"></span>비금속</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-purple-400"></span>할로젠</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-pink-400"></span>비활성 기체</span>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       원소 상세 모달 창 (보어 원자 모형 + 고1 핵심 개념)
+       ========================================================================= -->
+  <div id="elementModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+    <div class="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl p-6 sm:p-8 text-slate-100" onclick="event.stopPropagation();">
+      
+      <!-- 모달 상단 헤더: 번호, 닫기 버튼 -->
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <span id="modalNumber" class="text-sm font-mono font-bold text-indigo-400 px-2.5 py-0.5 rounded-full bg-indigo-950/80 border border-indigo-700/50">No. 1</span>
+          <span id="modalCategoryBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">비금속</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- 이전 / 다음 원소 탐구 버튼 -->
+          <button id="btnPrevElement" type="button" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors" title="이전 원소 (키보드 ←)">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button id="btnNextElement" type="button" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors" title="다음 원소 (키보드 →)">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button id="btnCloseModal" type="button" class="p-2 rounded-xl bg-slate-800 hover:bg-rose-900/60 text-slate-300 hover:text-rose-200 transition-colors ml-1" title="닫기 (ESC)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 모달 본문 2컬럼 레이아웃 (보어 모형 vs 상세 정보) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 items-center">
+        
+        <!-- 좌측: 보어 원자 모형 SVG 그래픽 -->
+        <div class="flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80">
+          <div class="text-xs font-semibold text-slate-400 mb-2 flex items-center gap-1.5">
+            <span>🪐</span>
+            <span>보어 원자 모형 시각화</span>
+          </div>
+          
+          <svg id="modalBohrSvg" viewBox="0 0 280 280" class="w-60 h-60">
+            <defs>
+              <radialGradient id="nucleusGradient" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ef4444"/>
+                <stop offset="100%" stop-color="#991b1b"/>
+              </radialGradient>
+            </defs>
+          </svg>
+
+          <!-- 전자 껍질(K, L, M, N) 배치 배지 목록 -->
+          <div class="mt-3 text-center">
+            <div class="text-[11px] text-slate-400 mb-1">전자 껍질별 전자 수:</div>
+            <div id="modalShellPills" class="flex flex-wrap justify-center gap-1.5"></div>
+          </div>
+        </div>
+
+        <!-- 우측: 원소 기본 스펙 및 화학 데이터 -->
+        <div class="flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline gap-3 mb-1">
+              <span id="modalSymbol" class="text-4xl font-extrabold text-white">H</span>
+              <span id="modalNameKo" class="text-2xl font-bold text-slate-200">수소</span>
+              <span id="modalNameEn" class="text-sm text-slate-400 font-mono">Hydrogen</span>
+            </div>
+            <p id="modalSummary" class="text-xs text-slate-300 leading-relaxed mt-2 mb-4">
+              우주에서 가장 풍부하고 가장 가벼운 원소입니다.
+            </p>
+
+            <!-- 주요 물성치 그리드 -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                <span class="text-slate-400 block text-[11px]">원자량</span>
+                <span id="modalAtomicWeight" class="font-bold text-slate-200">1.008 u</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                <span class="text-slate-400 block text-[11px]">족 / 주기</span>
+                <span class="font-bold text-slate-200"><span id="modalGroup">1족</span>, <span id="modalPeriod">1주기</span></span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-indigo-950/60 border border-indigo-700/60">
+                <span class="text-indigo-300 block text-[11px] font-semibold">원자가 전자 수 (결합)</span>
+                <span id="modalValence" class="font-extrabold text-indigo-200 text-sm">1개</span>
+              </div>
+              <div class="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                <span class="text-slate-400 block text-[11px]">상온 상태 (25℃)</span>
+                <span id="modalPhase" class="font-bold text-slate-200">기체</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 발견 시기 -->
+          <div class="mt-3 text-xs text-slate-400 flex items-center justify-between">
+            <span>발견:</span>
+            <span id="modalDiscovery" class="text-slate-300 font-medium">1766년 (캐번디시)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 모달 하단: 고1 통합과학 탐구 포인트 & 실생활 쓰임새 -->
+      <div class="mt-6 pt-5 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-800/50">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-indigo-300 mb-1.5">
+            <span>🎯</span>
+            <span>고1 통합과학 핵심 포인트</span>
+          </div>
+          <p id="modalHighSchool" class="text-xs text-slate-200 leading-relaxed">
+            1족에 위치하지만 금속이 아닌 비금속 원소입니다.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-800/50 border border-slate-700/60">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-300 mb-1.5">
+            <span>🌍</span>
+            <span>실생활 및 첨단 기술 속 쓰임새</span>
+          </div>
+          <p id="modalRealLife" class="text-xs text-slate-200 leading-relaxed">
+            로켓 연료, 친환경 수소차 연료 전지
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="mt-auto border-t border-slate-900 bg-slate-950/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>Science Lab Hub - 원소 주기율표 탐구관</div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="hover:text-slate-300 transition-colors">← 메인 로비로 이동</a>
+        <a href="acid-base.html" class="hover:text-indigo-400 transition-colors">다음 수업(산염기) →</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 데이터 및 제어 스크립트 로드 -->
+  <script src="js/elementsData.js"></script>
+  <script src="js/periodicTable.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Lab Hub - 인터랙티브 과학 탐구 플랫폼</title>
+  <meta name="description" content="학생과 교사를 위한 디지털 과학 탐구 플랫폼. 원소 주기율표, 산염기 중화반응 등 다양한 가상 실험과 개념 탐구를 한눈에 만나보세요.">
+
+  <!-- Pretendard 웹폰트 CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              950: '#1e1b4b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
+
+  <!-- 상단 플랫폼 헤더 (로비 네비게이션) -->
+  <header class="sticky top-0 z-40 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- 로고 및 플랫폼 명칭 -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30 group-hover:scale-105 transition-transform">
+            <span class="text-xl">🔬</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-extrabold text-lg tracking-tight text-white group-hover:text-indigo-300 transition-colors">Science Lab Hub</span>
+              <span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-indigo-950 text-indigo-300 border border-indigo-700/60">LOBBY</span>
+            </div>
+            <p class="text-xs text-slate-400 hidden sm:block">인터랙티브 과학 탐구 실험 포털</p>
+          </div>
+        </a>
+
+        <!-- 우측 시트 연동 상태 및 안내 도구 -->
+        <div class="flex items-center gap-3">
+          <!-- 구글 스프레드시트 연동 상태 배지 -->
+          <div id="syncStatus" class="text-xs font-medium px-2.5 py-1 rounded-full border bg-slate-900 border-slate-700 text-slate-300 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+            시트 연동 대기중
+          </div>
+
+          <!-- 동기화 새로고침 버튼 -->
+          <button id="syncBtn" type="button" title="스프레드시트 최신 데이터 즉시 새로고침" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+          </button>
+
+          <!-- 구글 시트 원본 열기 링크 -->
+          <a href="https://docs.google.com/spreadsheets/d/16l_F7CCNMT9UCLkxoXZc-_G25wO74ydiG273uVBOwtE/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-indigo-300 border border-slate-800 transition-colors">
+            <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H6v-2h6v2zm4-4H6v-2h10v2zm0-4H6V7h10v2z"/>
+            </svg>
+            <span>시트 편집 열기</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 히어로 배너 영역 -->
+  <section class="relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border-b border-slate-800/80 py-12 sm:py-16">
+    <!-- 배경 은은한 오로라 빛 효과 -->
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-indigo-600/20 via-blue-600/20 to-purple-600/10 blur-3xl pointer-events-none rounded-full"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-700/50 text-indigo-300 text-xs font-medium mb-4">
+          <span>✨</span>
+          <span>디지털 에듀테크 과학 탐구 포털</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+          교실에서 생생하게 만나는<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-300 to-sky-400">인터랙티브 과학 실험실</span>
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+          어려운 교과서 개념을 눈으로 보고 손으로 조작하며 직관적으로 이해해 보세요.<br class="hidden sm:inline">
+          학생들의 크롬북·아이패드 태블릿과 교사용 대형 전자칠판에 완벽 최적화되어 있습니다.
+        </p>
+
+        <!-- 핵심 통계 지표 -->
+        <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto">
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+            <div class="text-2xl font-bold text-indigo-400" id="activeLessonCount">2</div>
+            <div class="text-xs text-slate-400 mt-0.5">활성 탐구 수업</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+            <div class="text-2xl font-bold text-sky-400" id="totalLessonCount">4</div>
+            <div class="text-xs text-slate-400 mt-0.5">전체 수업 슬롯</div>
+          </div>
+          <div class="col-span-2 sm:col-span-1 p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+            <div class="text-2xl font-bold text-emerald-400">100%</div>
+            <div class="text-xs text-slate-400 mt-0.5">웹 브라우저 즉시 실행</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 수업 탐색 도구 바 (필터 및 검색) -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 w-full">
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      
+      <!-- 학년 / 단원별 필터 탭 버튼 -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0 scrollbar-none" role="tablist">
+        <button type="button" class="filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-indigo-600 text-white shadow-md" data-category="all">
+          전체 수업
+        </button>
+        <button type="button" class="filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700/80" data-category="high1">
+          고1 통합과학
+        </button>
+        <button type="button" class="filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700/80" data-category="chem">
+          화학 I
+        </button>
+        <button type="button" class="filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700/80" data-category="bio">
+          생명과학
+        </button>
+      </div>
+
+      <!-- 실시간 수업 검색창 -->
+      <div class="relative min-w-[240px] sm:min-w-[300px]">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <input 
+          id="portalSearchInput" 
+          type="text" 
+          placeholder="수업 제목 또는 과학 개념 검색 (예: 원소, 산염기, 족)"
+          class="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-700 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+        >
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 본문: 수업 카드 그리드 영역 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+          <span>개별 탐구 수업 목록</span>
+          <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 font-normal">독립 URL 분리</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">원하는 수업을 선택하여 독립된 탐구 공간으로 이동하세요.</p>
+      </div>
+    </div>
+
+    <!-- 카드들이 자바스크립트로 렌더링되는 그리드 컨테이너 -->
+    <div id="lessonsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+      <!-- portal.js에 의해 동적으로 채워집니다. -->
+      <div class="col-span-full py-12 text-center text-slate-400">
+        <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+        <p class="text-sm">수업 목록을 불러오는 중입니다...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- 푸터 영역 -->
+  <footer class="mt-auto border-t border-slate-900 bg-slate-950/60 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-slate-400">Science Lab Hub</span>
+          <span>|</span>
+          <span>선생님과 학생을 위한 스마트 과학 탐구 플랫폼</span>
+        </div>
+        <div>
+          구글 스프레드시트와 실시간 연동되어 새로운 수업이 유연하게 등록됩니다.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 포털 자바스크립트 연결 -->
+  <script src="js/portal.js"></script>
+</body>
+</html>

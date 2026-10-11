@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>산염기 중화반응 실험실 - Science Lab Hub</title>
+  <meta name="description" content="고등학교 1학년 통합과학 산과 염기의 중화 반응 가상 실험실. 알짜 이온 반응식, 지시약 색 변화, 중화열 그래프를 인터랙티브하게 탐구하세요.">
+
+  <!-- Pretendard 웹폰트 CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
+
+  <!-- =========================================================================
+       모든 개별 수업 페이지 공통 상단 내비게이션 바
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- [플랫폼 로고]: 클릭 시 언제든 메인 로비(index.html)로 복귀 -->
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="flex items-center gap-2.5 group" title="메인 로비(index.html)로 복귀">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center text-white shadow-md shadow-indigo-600/30 group-hover:scale-105 transition-transform">
+              <span class="text-lg">🔬</span>
+            </div>
+            <div>
+              <span class="font-bold text-base tracking-tight text-white group-hover:text-indigo-300 transition-colors">Science Lab Hub</span>
+            </div>
+          </a>
+
+          <!-- 현재 수업 표시 뱃지 -->
+          <div class="hidden sm:flex items-center gap-2 pl-3 border-l border-slate-800">
+            <span class="text-xs font-mono font-bold text-sky-400 bg-sky-950/60 px-2 py-0.5 rounded border border-sky-800/40">수업 02</span>
+            <span class="text-xs font-medium text-slate-300">산염기 중화반응 실험실</span>
+          </div>
+        </div>
+
+        <!-- [← 전체 수업 목록] 및 [← 이전 수업 빠른 이동] 내비게이션 -->
+        <nav class="flex items-center gap-2 sm:gap-3" aria-label="수업 이동 내비게이션">
+          <!-- 전체 수업 목록 버튼 -->
+          <a href="index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-all shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span class="hidden xs:inline">전체 수업 목록</span>
+            <span class="xs:hidden">목록</span>
+          </a>
+
+          <!-- 이전 수업(원소 주기율표) 빠른 이동 버튼 -->
+          <a href="periodic-table.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span>이전 수업 (주기율표)</span>
+          </a>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- 수업 인트로 배너 -->
+  <section class="bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/60 py-6 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-950 text-sky-300 border border-sky-700/60">고1 통합과학</span>
+          <span class="text-xs text-slate-400">화학 변화와 중화 반응</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
+          <span>🧪 산염기 중화반응 가상 실험실</span>
+        </h1>
+        <p class="text-sm text-slate-300 mt-1 max-w-2xl">
+          산의 수소 이온(H⁺)과 염기의 수산화 이온(OH⁻)이 반응하여 물(H₂O)이 만들어지는 과정을 시뮬레이션으로 생생하게 관찰하세요.
+        </p>
+      </div>
+
+      <!-- 외부 원본 새 창 열기 버튼 -->
+      <div class="shrink-0 flex items-center gap-2">
+        <a href="https://imuzikr.github.io/test02/" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl font-bold text-sm bg-indigo-600 hover:bg-indigo-500 text-white transition-all inline-flex items-center gap-2 shadow-lg shadow-indigo-600/20">
+          <span>새 창으로 전체화면 열기</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 메인 탐구 콘텐츠: 가상 실험실 임베드 및 핵심 학습 요약 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+    
+    <!-- 가상 실험실 인터랙티브 프레임 영역 -->
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
+      <!-- 프레임 상단 상태 바 -->
+      <div class="px-5 py-3 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          <span class="font-medium text-slate-300">인터랙티브 실험 시뮬레이션 활성화됨</span>
+        </div>
+        <span class="font-mono text-slate-500 hidden sm:inline">https://imuzikr.github.io/test02/</span>
+      </div>
+
+      <!-- 반응형 iframe 뷰어 (태블릿/PC 최적화) -->
+      <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] min-h-[520px] bg-slate-950">
+        <iframe 
+          src="https://imuzikr.github.io/test02/" 
+          class="w-full h-full border-0"
+          title="산염기 중화반응 실험실"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- 고1 핵심 과학 개념 요약 카드 그리드 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- 카드 1: 알짜 이온 반응식 -->
+      <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-indigo-950 border border-indigo-700/50 flex items-center justify-center text-indigo-300 text-lg mb-3">
+            ⚗️
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">알짜 이온 반응식</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            중화 반응에서 실제로 반응하여 새로운 물질(물)을 만드는 이온들만의 반응식입니다.
+          </p>
+          <div class="mt-4 p-3 rounded-xl bg-slate-950 border border-slate-800 text-center font-mono text-indigo-300 font-bold text-sm">
+            H⁺(aq) + OH⁻(aq) → H₂O(l)
+          </div>
+        </div>
+        <div class="mt-4 text-[11px] text-slate-400">
+          * 구경꾼 이온(Cl⁻, Na⁺ 등)은 반응에 참여하지 않고 용액에 그대로 남아있습니다.
+        </div>
+      </div>
+
+      <!-- 카드 2: 지시약 색 변화 -->
+      <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-rose-950 border border-rose-700/50 flex items-center justify-center text-rose-300 text-lg mb-3">
+            🎨
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">지시약의 액성별 색 변화</h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            수용액 속 수소 이온 농도에 따라 고유한 색을 나타냅니다.
+          </p>
+          <div class="space-y-1.5 text-xs">
+            <div class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800">
+              <span class="font-medium text-slate-300">페놀프탈레인</span>
+              <span class="font-bold text-slate-400">무색 → 무색 → <span class="text-rose-400">붉은색</span></span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800">
+              <span class="font-medium text-slate-300">BTB 용액</span>
+              <span class="font-bold"><span class="text-yellow-400">노랑</span> → <span class="text-emerald-400">초록</span> → <span class="text-blue-400">파랑</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 text-[11px] text-slate-400">
+          (산성 → 중성 → 염기성 순서)
+        </div>
+      </div>
+
+      <!-- 카드 3: 중화열과 최고 온도 -->
+      <div class="p-6 rounded-2xl bg-slate-900/70 border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-xl bg-amber-950 border border-amber-700/50 flex items-center justify-center text-amber-300 text-lg mb-3">
+            🔥
+          </div>
+          <h3 class="text-base font-bold text-white mb-2">중화열과 중화점 찾기</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            H⁺와 OH⁻가 반응할 때 열(중화열)이 방출되므로, 생성된 물의 양이 가장 많을 때 용액의 온도가 가장 높아집니다.
+          </p>
+          <div class="mt-4 p-3 rounded-xl bg-slate-950 border border-slate-800 text-center font-bold text-amber-300 text-xs">
+            온도가 가장 높은 지점 = 중화점 (완전 중화)
+          </div>
+        </div>
+        <div class="mt-4 text-[11px] text-slate-400">
+          * 실생활 활용: 생선 비린내 레몬즙 제거, 위산 과다 제산제 복용, 토양 석회 비료
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="mt-auto border-t border-slate-900 bg-slate-950/60 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>Science Lab Hub - 산염기 중화반응 실험실</div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="hover:text-slate-300 transition-colors">← 메인 로비로 이동</a>
+        <a href="periodic-table.html" class="hover:text-indigo-400 transition-colors">이전 수업(주기율표) ←</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
